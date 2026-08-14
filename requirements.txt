@@ -1,8 +1,9 @@
-alibi==0.9.5
-alibi[tensorflow]
-numpy==1.23.5
-pandas==1.5.3
+alibi==0.9.6
+click==8.1.8
+matplotlib==3.8.4
+numpy==1.26.4
+pandas==2.2.3
 scikit-image==0.22.0
-scikit-learn==1.2.2
-tensorflow<2.15.0
-shap==0.44.1
+scikit-learn==1.5.2
+shap==0.46.0
+spacy==3.7.5

@@ -11,13 +11,16 @@ These are different explanation objects. They can describe model behavior, but t
 
 ## Recommended: Colab / Notebook-First
 
-1. Open `explainability.ipynb` in Google Colab from this repository, or upload the notebook, `requirements.txt`, and `BostonHousing.csv` to the same Colab session.
-2. Choose a CPU runtime.
-3. Run the installation cell once. If Colab asks for a runtime restart, restart and continue at the version-check cell.
-4. Run all remaining cells from top to bottom.
-5. Save or download an executed copy with your plots, TODO code, and short-answer cells completed.
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/mlip-cmu-online/lab-explainability/blob/main/explainability.ipynb)
 
-The pinned environment targets Python 3.12. The notebook uses only the included CSV and scikit-learn's bundled digits data; it does not need to download a pretrained model or external dataset.
+1. Select **Open in Colab** above. If the starter repository is still private, sign in with the GitHub account you use for the course and allow Colab to access private repositories. Alternatively, upload `explainability.ipynb` directly.
+2. Download `BostonHousing.csv` from this repository and upload it when the notebook's data cell prompts you.
+3. Choose a CPU runtime.
+4. Run the installation cell once. If the version-check cell asks you to restart, select **Runtime > Restart session**, then continue at the version-check cell without rerunning the installation cell.
+5. Run all remaining cells from top to bottom.
+6. Save or download an executed copy with your plots, TODO code, and short-answer cells completed.
+
+The pinned environment targets Python 3.12, used by the current Colab runtime. The notebook uses only the included CSV and scikit-learn's bundled digits data; it does not download a pretrained model or external dataset.
 
 ## Local Fallback
 
