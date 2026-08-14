@@ -1,53 +1,60 @@
 # Lab 10: Explainability with Alibi & SHAP
-In this lab, you'll learn about the Alibi Explain and SHAP libraries, and implement both global and local explanations of tabular and image classification models.
-Alibi Explain is an open-source Python library for machine learning model inspection and interpretation. It provides high-quality implementations of black-box, white-box, local, and global explanation methods for classification and regression models.
-SHAP (SHapley Additive exPlanations) is based on game theory and helps quantify the contribution of each feature to a model’s prediction, offering both global and instance-level interpretability.
-Complete all the Deliverables mentioned below and show them to a TA for credit.
 
-## Notebook structure
-- Section 1: Data and Model Setup
-- Section 2: Explainability with Alibi
-- Section 3: Anchor Explanations (Run Only)
-- Section 4: SHAP Comparison
-- Section 5: Reflection and Discussion
+This repository contains the notebook-first starter for Lab 10. You will use:
 
+- partial-dependence variance (PDV) as a global feature-importance heuristic;
+- partial-dependence (PD) curves to inspect average model response;
+- an image anchor to inspect one image classifier prediction; and
+- SHAP for local attributions and a global aggregation of their absolute values.
+
+These are different explanation objects. They can describe model behavior, but they do not by themselves establish causation, discrimination, or fairness.
+
+## Recommended: Colab / Notebook-First
+
+1. Open `explainability.ipynb` in Google Colab from this repository, or upload the notebook, `requirements.txt`, and `BostonHousing.csv` to the same Colab session.
+2. Choose a CPU runtime.
+3. Run the installation cell once. If Colab asks for a runtime restart, restart and continue at the version-check cell.
+4. Run all remaining cells from top to bottom.
+5. Save or download an executed copy with your plots, TODO code, and short-answer cells completed.
+
+The pinned environment targets Python 3.12. The notebook uses only the included CSV and scikit-learn's bundled digits data; it does not need to download a pretrained model or external dataset.
+
+## Local Fallback
+
+Use a fresh Python 3.12 environment from this directory:
+
+```shell
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install jupyter
+jupyter notebook explainability.ipynb
+```
+
+Run the notebook from top to bottom. Other Python versions are not part of the supported pinned path.
 
 ## Deliverables
-- Finish all the TODOs in Section 2 of the notebook
-- Generate Partial Dependence (PD) Plots and discuss your findings with the TA. Answer:
-     - Q1: Which features have higher importance in the prediction? (Section 2.1)
-     - Q2: What can you conclude with the PD plots? (Section 2.2)
-     - Q3: Discuss with the TA the results (heatmaps). (Section 2.2)
-- Run and explore Anchor explanations on image data. Show your final results and discuss the parameters and findings with the TA. (Section 2.3)
-- Complete the SHAP Comparison section:
-     - Q4: Which features have the strongest SHAP impact, and do they match the PD findings?s?
-     - Q5: Write 2–3 sentences summarizing what your model relies on and whether any features raise potential fairness or bias concerns?
 
-NOTE: You only need to write short answers. Most cells can run directly.
+Submit one executed notebook containing:
 
-## Getting Started
-Clone [this](https://github.com/nikitachaudharicodes/mlip-explainability-lab) repository and follow instructions in the notebook.
+- the completed PDV TODO and the requested PD plots;
+- answers to Q1–Q3 with the requested PDV/PD plots;
+- the image-anchor result and a brief precision/coverage interpretation;
+- Q4 comparing mean absolute SHAP importance with PDV (not with the image-anchor task); and
+- Q5 stating an audit hypothesis and a concrete follow-up check without treating attribution as proof of a fairness problem.
 
-### Install Dependencies
+## Explanation Assumptions
 
-For this assignment, make sure you have the required packages installed.
-```
-pip install -r requirements.txt
-pip install shap
-```
-_(If there are any major unsolvable issues prefer running this notebook on Google Colaboratory)_
-
-### Possible Issues with installing Alibi
-`TypeError: issubclass() arg 1 must be a class` \
-**Solution:** https://stackoverflow.com/questions/76313592/import-langchain-error-typeerror-issubclass-arg-1-must-be-a-class
-<br><br>
-If there's any more issues, please contact a TA to update this list (with a solution if its solved)
+- PD and PDV use the training split as their reference distribution. Because PD varies selected features while averaging over the remaining rows, correlated inputs can produce unrealistic combinations.
+- SHAP uses a seeded sample of 100 raw training rows as its background dataset. `shap.TreeExplainer` uses `feature_perturbation='interventional'` with that empirical background; its attributions can change with a different background or feature-dependence treatment.
+- The global SHAP chart is the mean absolute value of local SHAP attributions over the explained test rows. It is not permutation importance or PDV.
+- The image anchor concerns a separate image classifier. Do not infer agreement or disagreement between its superpixels and the tabular model's feature rankings.
 
 ## References
-1. https://docs.seldon.io/projects/alibi/en/stable/examples/pdp_regression_bike.html
-2. https://docs.seldon.io/projects/alibi/en/stable/methods/PartialDependence.html
-3. https://docs.seldon.io/projects/alibi/en/stable/examples/anchor_image_imagenet.html
-4. https://shap.readthedocs.io/en/latest/
 
-
-
+1. https://docs.seldon.io/projects/alibi/en/stable/methods/PartialDependence.html
+2. https://docs.seldon.io/projects/alibi/en/stable/methods/PartialDependenceVariance.html
+3. https://docs.seldon.io/projects/alibi/en/stable/methods/Anchors.html
+4. https://shap.readthedocs.io/en/latest/generated/shap.Explainer.html
+5. https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html
