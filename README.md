@@ -18,7 +18,7 @@ These are different explanation objects. They can describe model behavior, but t
 3. Choose a CPU runtime.
 4. Run the installation cell once. If the version-check cell asks you to restart, select **Runtime > Restart session**, then continue at the version-check cell without rerunning the installation cell.
 5. Run all remaining cells from top to bottom.
-6. Save or download an executed copy with your plots, TODO code, and short-answer cells completed.
+6. Run the final **Save submission evidence** cell, then save or download an executed copy with your plots, TODO code, and short-answer cells completed.
 
 The pinned environment targets Python 3.12, used by the current Colab runtime. The notebook uses only the included CSV and scikit-learn's bundled digits data; it does not download a pretrained model or external dataset.
 
@@ -39,13 +39,32 @@ Run the notebook from top to bottom. Other Python versions are not part of the s
 
 ## Deliverables
 
-Submit one executed notebook containing:
+Complete one executed notebook containing:
 
 - the completed PDV TODO and the requested PD plots;
 - answers to Q1–Q3 with the requested PDV/PD plots;
 - the image-anchor result and a brief precision/coverage interpretation;
 - Q4 comparing mean absolute SHAP importance with PDV (not with the image-anchor task); and
 - Q5 stating an audit hypothesis and a concrete follow-up check without treating attribution as proof of a fairness problem.
+
+## Generate the Submission Report
+
+After running the final evidence cell, save the complete executed notebook as `explainability.ipynb` in this repository. From the repository root, run:
+
+```shell
+python3 scripts/generate-explainability-submission.py \
+  --learner "Your name" \
+  --notebook explainability.ipynb
+```
+
+The command writes:
+
+- `submission/explainability-report.html`, the self-contained report to upload to Canvas; and
+- `submission/explainability-manifest.json`, the matching machine-readable completeness record to retain with your evidence.
+
+Open the HTML report and correct every item marked `missing`. The report embeds the saved PDV, one- and two-feature PD, Anchor, global SHAP, and local SHAP figures, their compact numeric results, and a downloadable copy of the executed notebook. If you prefer PDF, open the report in a browser and use **Print → Save as PDF**, with background graphics enabled.
+
+The command reads only the saved notebook. It does not run Alibi or SHAP, load data, or contact an external service. It checks execution state, error outputs, the presence of all six short answers, saved plot structure, matching feature names and result shapes, Anchor precision/coverage ranges, and obvious plaintext credential patterns. It does not assess your explanation comparison or audit hypothesis; answer those two interpretation spot checks separately in Canvas.
 
 ## Explanation Assumptions
 
