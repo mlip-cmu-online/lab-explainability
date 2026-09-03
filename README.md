@@ -1,4 +1,4 @@
-# Lab 10: Explainability with Alibi & SHAP
+# Lab: Explainability with Alibi & SHAP
 
 This repository contains the notebook-first starter for Lab 10. You will use:
 
